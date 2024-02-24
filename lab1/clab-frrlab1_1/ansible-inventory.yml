@@ -8,14 +8,14 @@ all:
     linux:
       hosts:
         clab-frrlab1_1-PC1:
-          ansible_host: 172.20.20.6
-        clab-frrlab1_1-PC2:
           ansible_host: 172.20.20.3
+        clab-frrlab1_1-PC2:
+          ansible_host: 172.20.20.7
         clab-frrlab1_1-PC3:
           ansible_host: 172.20.20.4
         clab-frrlab1_1-router1:
-          ansible_host: 172.20.20.2
+          ansible_host: 172.20.20.6
         clab-frrlab1_1-router2:
-          ansible_host: 172.20.20.5
+          ansible_host: 172.20.20.2
         clab-frrlab1_1-router3:
-          ansible_host: 172.20.20.7
+          ansible_host: 172.20.20.5
