@@ -120,19 +120,22 @@ def configure_topology(topology: dict)->None:
                                    '-c "ip route 192.168.22.0/24 192.168.33.3 eth1" '
                                    '-c "do wr"', stdout=True, stderr=True, tty=True, privileged=True)
 
-
     client = docker.from_env()
     for node in topology['topology']['nodes'].keys():
         configure_node(node)
 
 
 if __name__ == '__main__':
+    # Buidling topology with name test0
     topo_name = "test0"
     endpoints = [["router1:eth1", "router2:eth1"], ["router1:eth2", "router3:eth1"], ["router2:eth2", "router3:eth2"], ["PC1:eth1", "router1:eth3"],  ["PC2:eth1", "router2:eth3"],  ["PC3:eth1", "router3:eth3"]]
     topology = generate_topology(topo_name, 3, 3, endpoints)
     with open(topo_name + '.yml', 'w') as f:
         yaml.dump(topology, f, default_flow_style=False)
 
+    # Starting clab...
     docker_process = subprocess.run(['sudo', 'clab', 'deploy', '--topo', topo_name + '.yml', '--reconfigure'])
+
+    # Configuring topology...
     if docker_process.returncode == 0:
         configure_topology(topology)
