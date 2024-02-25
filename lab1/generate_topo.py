@@ -139,3 +139,4 @@ if __name__ == '__main__':
     # Configuring topology...
     if docker_process.returncode == 0:
         configure_topology(topology)
+        print("The topology has been successfully generated and launched")

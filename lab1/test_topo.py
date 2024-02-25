@@ -77,9 +77,17 @@ def parse_command(command:str):
 
 if __name__ == '__main__':
     topo_name = "test0"
+    check_ping(topo_name, 'PC1', '192.168.22.4')
+    check_ping(topo_name, 'PC1', '192.168.33.4')
 
-    # check_ping(topo_name, 'router1', '192.168.1.2')
-    # check_tracert(topo_name, 'router1', '192.168.1.2')
-    # parse_command("PC1 sh run")
+    check_ping(topo_name, 'PC2', '192.168.11.4')
+    check_ping(topo_name, 'PC2', '192.168.33.4')
+
+    check_ping(topo_name, 'PC3', '192.168.11.4')
+    check_ping(topo_name, 'PC3', '192.168.22.4')
+
+    check_tracert(topo_name, 'PC1', '192.168.22.4')
+    parse_command("PC1 sh run")
+    parse_command("PC1 sh ip route")
     parse_command("PC1 sh int brief")
-    # parse_command("docker ps")
+    parse_command("docker ps")
