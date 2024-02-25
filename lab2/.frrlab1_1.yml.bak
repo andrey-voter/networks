@@ -1,0 +1,46 @@
+name: frrlab1_1
+topology:
+  nodes:
+    router1:
+      kind: linux
+      image: frrouting/frr:latest
+      binds:
+        - router1/daemons:/etc/frr/daemons
+        - router1/frr:/etc/frr/
+    router2:
+      kind: linux
+      image: frrouting/frr:latest
+      binds:
+        - router2/daemons:/etc/frr/daemons
+        - router2/frr:/etc/frr/
+    router3:
+      kind: linux
+      image: frrouting/frr:latest
+      binds:
+        - router3/daemons:/etc/frr/daemons
+        - router3/frr:/etc/frr/
+    PC1:
+     kind: linux
+     image: frrouting/frr:latest
+     binds:
+        - PC1/daemons:/etc/frr/daemons
+        - PC1/frr:/etc/frr/
+    PC2:
+     kind: linux
+     image: frrouting/frr:latest
+     binds:
+         - PC2/daemons:/etc/frr/daemons
+         - PC2/frr:/etc/frr/
+    PC3:
+     kind: linux
+     image: frrouting/frr:latest
+     binds:
+         - PC3/daemons:/etc/frr/daemons
+         - PC3/frr:/etc/frr/
+  links:
+    - endpoints: ["router1:eth1", "router2:eth1"]
+    - endpoints: ["router1:eth2", "router3:eth1"]
+    - endpoints: ["router2:eth2", "router3:eth2"]
+    - endpoints: ["PC1:eth1", "router1:eth3"]
+    - endpoints: ["PC2:eth1", "router2:eth3"]
+    - endpoints: ["PC3:eth1", "router3:eth3"]

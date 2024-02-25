@@ -1,0 +1,52 @@
+name: test1
+topology:
+  links:
+  - endpoints:
+    - router1:eth1
+    - router2:eth1
+  - endpoints:
+    - router1:eth2
+    - router3:eth1
+  - endpoints:
+    - router2:eth2
+    - router3:eth2
+  - endpoints:
+    - PC1:eth1
+    - router1:eth3
+  - endpoints:
+    - PC2:eth1
+    - router2:eth3
+  - endpoints:
+    - PC3:eth1
+    - router3:eth3
+  nodes:
+    PC1:
+      binds:
+      - daemons:/etc/frr/daemons
+      image: frrouting/frr:latest
+      kind: linux
+    PC2:
+      binds:
+      - daemons:/etc/frr/daemons
+      image: frrouting/frr:latest
+      kind: linux
+    PC3:
+      binds:
+      - daemons:/etc/frr/daemons
+      image: frrouting/frr:latest
+      kind: linux
+    router1:
+      binds:
+      - daemons:/etc/frr/daemons
+      image: frrouting/frr:latest
+      kind: linux
+    router2:
+      binds:
+      - daemons:/etc/frr/daemons
+      image: frrouting/frr:latest
+      kind: linux
+    router3:
+      binds:
+      - daemons:/etc/frr/daemons
+      image: frrouting/frr:latest
+      kind: linux

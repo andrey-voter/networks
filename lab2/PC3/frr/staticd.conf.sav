@@ -1,0 +1,13 @@
+!
+! Zebra configuration saved from vty
+!   2024/02/20 19:35:43
+!
+frr version 8.4_git
+frr defaults traditional
+!
+hostname PC3
+!
+!
+!
+!
+!
