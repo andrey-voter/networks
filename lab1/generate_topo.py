@@ -33,8 +33,8 @@ def configure_topology(topology: dict)->None:
         node_name = node
         if node_name == 'router1':
             container = client.containers.get(f'clab-{topo_name}-router1')
-            container.exec_run(cmd='vtysh -c "conf"'
-                                   '-c "int lo0"'
+            container.exec_run(cmd='vtysh -c "conf" '
+                                   '-c "int lo0" '
                                    '-c "ip address 10.10.10.1/32" '
                                    '-c "int eth1" '
                                    '-c "ip addr 192.168.1.1/24" '

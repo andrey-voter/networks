@@ -28,7 +28,7 @@ def generate_topology(topo_name: str, num_routers: int, num_pcs: int, links: lis
 
 def configure_topology(topology: dict) -> None:
     """
-    This function configures existing topology (assigns IP-addresses, registers static routes, etc)
+    This function configures existing topology (assigns IP-addresses etc.)
 
     !!! Before running the function, make sure that you have already generated topo via generate_topology() and started clab via "sudo clab deploy --topo topo_name.yml"  !!!
     """
@@ -36,130 +36,161 @@ def configure_topology(topology: dict) -> None:
     def configure_node(node: str):
         node_name = node
         if node_name == 'router1':
+            print("configuring router1...")
             container = client.containers.get(f'clab-{topo_name}-router1')
-            container.exec_run(cmd='vtysh -c "conf"'
-                                   '-c "router isis 1"'
-                                   '-c "is-type level-2-only"'
-                                   '-c "net 49.0001.1000.0000.1001.00"'
-                                   '-c "q"'
-                                   '-c "int lo0"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis passive"'
-                                   '-c "int eth1"'
-                                   '-c "ip addr 192.168.1.1/24" '
-                                   '-c "ip router isis 1"'
-                                   '-c "isis circuit-type level-2-only"'
-                                   '-c "isis network point-to-point"'
-                                   '-c "int eth2" '
-                                   '-c "ip addr 192.168.2.1/24"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis circuit-type level-2-only"'
-                                   '-c "isis network point-to-point"'
-                                   '-c "int eth3" '
-                                   '-c "ip addr 192.168.11.1/24"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis circuit-type level-2-only"'
-                                   '-c "isis network point-to-point"'
-                                   '-c "do wr"', stdout=True, stderr=True, tty=True, privileged=True)
-        elif node_name == 'router2':
-            container = client.containers.get(f'clab-{topo_name}-router2')
-            container.exec_run(cmd='vtysh -c "conf"'
-                                   '-c "router isis 1"'
-                                   '-c "is-type level-2-only"'
-                                   '-c "net 49.0001.2000.0000.2000.00"'
-                                   '-c "q"'
-                                   '-c "int lo0"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis passive"'
-                                   '-c "int eth1"'
-                                   '-c "ip address 192.168.1.2/24"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis circuit-type level-2-only"'
-                                   '-c "isis network point-to-point"'
-                                   '-c "int eth2"'
-                                   '-c "ip address 192.168.3.2/24"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis circuit-type level-2-only"'
-                                   '-c "isis network point-to-point"'
-                                   '-c "int eth3" '
-                                   '-c "ip address 192.168.22.2/24"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis circuit-type level-2-only"'
-                                   '-c "isis network point-to-point"'
-                                   '-c "do wr"', stdout=True, stderr=True, tty=True, privileged=True)
-        elif node_name == 'router3':
-            container = client.containers.get(f'clab-{topo_name}-router3')
-            container.exec_run(cmd='vtysh -c "conf"'
-                                   '-c "router isis 1"'
-                                   '-c "is-type level-2-only"'
-                                   '-c "net 49.0001.3000.0000.3000.00"'
-                                   '-c "q"'
-                                   '-c "int lo0"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis passive"'
+            container.exec_run(cmd='vtysh -c "conf" '
+                                   '-c "router isis 1" '
+                                   '-c "is-type level-2-only" '
+                                   '-c "net 49.0001.1000.0000.1001.00" '
+                                   '-c "q" '
+                                   '-c "int lo0" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis passive" '
+                                   '-c "q" '
                                    '-c "int eth1" '
-                                   '-c "ip address 192.168.2.3/24"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis circuit-type level-2-only"'
-                                   '-c "isis network point-to-point"'
+                                   '-c "ip addr 192.168.1.1/24" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis circuit-type level-2-only" '
+                                   '-c "isis network point-to-point" '
+                                   '-c "q" '
                                    '-c "int eth2" '
-                                   '-c "ip address 192.168.3.3/24"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis circuit-type level-2-only"'
-                                   '-c "isis network point-to-point"'
-                                   '-c "int eth3"'
-                                   '-c "ip address 192.168.33.3/24"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis circuit-type level-2-only"'
-                                   '-c "isis network point-to-point"'
+                                   '-c "ip addr 192.168.2.1/24" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis circuit-type level-2-only" '
+                                   '-c "isis network point-to-point" '
+                                   '-c "q" '
+                                   '-c "int eth3" '
+                                   '-c "ip addr 192.168.11.1/24" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis circuit-type level-2-only" '
+                                   '-c "isis network point-to-point" '
                                    '-c "do wr"', stdout=True, stderr=True, tty=True, privileged=True)
+
+            print("finished configuring router1!")
+        elif node_name == 'router2':
+            print("configuring router2...")
+            container = client.containers.get(f'clab-{topo_name}-router2')
+            container.exec_run(cmd='vtysh -c "conf" '
+                                   '-c "router isis 1" '
+                                   '-c "is-type level-2-only" '
+                                   '-c "net 49.0001.2000.0000.2000.00" '
+                                   '-c "q" '
+                                   '-c "int lo0" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis passive" '
+                                   '-c "q" '
+                                   '-c "int eth1" '
+                                   '-c "ip address 192.168.1.2/24" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis circuit-type level-2-only" '
+                                   '-c "isis network point-to-point" '
+                                   '-c "q" '
+                                   '-c "int eth2" '
+                                   '-c "ip address 192.168.3.2/24" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis circuit-type level-2-only" '
+                                   '-c "isis network point-to-point" '
+                                   '-c "q" '
+                                   '-c "int eth3" '
+                                   '-c "ip address 192.168.22.2/24" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis circuit-type level-2-only" '
+                                   '-c "isis network point-to-point" '
+                                   '-c "do wr"', stdout=True, stderr=True, tty=True, privileged=True)
+
+            print("finished configuring router2!")
+        elif node_name == 'router3':
+            print("configuring router3...")
+            container = client.containers.get(f'clab-{topo_name}-router3')
+            container.exec_run(cmd='vtysh -c "conf" '
+                                   '-c "router isis 1" '
+                                   '-c "is-type level-2-only" '
+                                   '-c "net 49.0001.3000.0000.3000.00" '
+                                   '-c "q" '
+                                   '-c "int lo0" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis passive" '
+                                   '-c "q" '
+                                   '-c "int eth1" '
+                                   '-c "ip address 192.168.2.3/24" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis circuit-type level-2-only" '
+                                   '-c "isis network point-to-point" '
+                                   '-c "q" '
+                                   '-c "int eth2" '
+                                   '-c "ip address 192.168.3.3/24" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis circuit-type level-2-only" '
+                                   '-c "isis network point-to-point" '
+                                   '-c "q" '
+                                   '-c "int eth3" '
+                                   '-c "ip address 192.168.33.3/24" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis circuit-type level-2-only" '
+                                   '-c "isis network point-to-point" '
+                                   '-c "do wr"', stdout=True, stderr=True, tty=True, privileged=True)
+
+            print("finished configuring router3!")
         elif node_name == 'PC1':
+            print("configuring PC1...")
             container = client.containers.get(f'clab-{topo_name}-PC1')
-            container.exec_run(cmd='vtysh -c "conf"'
-                                   '-c "router isis 1"'
-                                   '-c "net 49.0001.0000.0000.0001.00"'
-                                   '-c "is-type level-2-only"'
-                                   '-c "q"'
-                                   '-c "int lo"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis passive"'
-                                   '-c "int eth1"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis network point-to-point"'
-                                   '-c "isis circuit-type level-2-only"'
+            container.exec_run(cmd='vtysh -c "conf" '
+                                   '-c "router isis 1" '
+                                   '-c "net 49.0001.0000.0000.0001.00" '
+                                   '-c "is-type level-2-only" '
+                                   '-c "q" '
+                                   '-c "int lo" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis passive" '
+                                   '-c "q" '
+                                   '-c "int eth1" '
+                                   '-c "ip address 192.168.11.4/24" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis network point-to-point" '
+                                   '-c "isis circuit-type level-2-only" '
                                    '-c "do wr"', stdout=True, stderr=True, tty=True, privileged=True)
+
+            print("finished configuring PC1!")
         elif node_name == 'PC2':
+            print("configuring PC2...")
             container = client.containers.get(f'clab-{topo_name}-PC2')
-            container.exec_run(cmd='vtysh -c "conf"'
-                                   '-c "router isis 1"'
-                                   '-c "net 49.0001.2000.0000.2002.00"'
-                                   '-c "is-type level-2-only"'
-                                   '-c "q"'
-                                   '-c "int lo"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis passive"'
-                                   '-c "int eth1"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis network point-to-point"'
-                                   '-c "isis circuit-type level-2-only"'
+            container.exec_run(cmd='vtysh -c "conf" '
+                                   '-c "router isis 1" '
+                                   '-c "net 49.0001.2000.0000.2002.00" '
+                                   '-c "is-type level-2-only" '
+                                   '-c "q" '
+                                   '-c "int lo" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis passive" '
+                                   '-c "q" '
+                                   '-c "int eth1" '
+                                   '-c "ip address 192.168.22.4/24" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis network point-to-point" '
+                                   '-c "isis circuit-type level-2-only" '
                                    '-c "do wr"', stdout=True, stderr=True, tty=True, privileged=True)
 
+            print("finished configuring PC2!")
         elif node_name == 'PC3':
+            print("configuring PC3...")
             container = client.containers.get(f'clab-{topo_name}-PC3')
-            container.exec_run(cmd='vtysh -c "conf"'
-                                   '-c "router isis 1"'
-                                   '-c "net 49.0001.3000.0000.3003.00"'
-                                   '-c "is-type level-2-only"'
-                                   '-c "q"'
-                                   '-c "int lo"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis passive"'
-                                   '-c "int eth1"'
-                                   '-c "ip router isis 1"'
-                                   '-c "isis network point-to-point"'
-                                   '-c "isis circuit-type level-2-only"'
+            container.exec_run(cmd='vtysh -c "conf" '
+                                   '-c "router isis 1" '
+                                   '-c "net 49.0001.3000.0000.3003.00" '
+                                   '-c "is-type level-2-only" '
+                                   '-c "q" '
+                                   '-c "int lo" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis passive" '
+                                   '-c "q" '
+                                   '-c "int eth1" '
+                                   '-c "ip address 192.168.33.4/24" '
+                                   '-c "ip router isis 1" '
+                                   '-c "isis network point-to-point" '
+                                   '-c "isis circuit-type level-2-only" '
                                    '-c "do wr"', stdout=True, stderr=True, tty=True, privileged=True)
 
+            print("finished configuring PC3!")
     client = docker.from_env()
     for node in topology['topology']['nodes'].keys():
         configure_node(node)

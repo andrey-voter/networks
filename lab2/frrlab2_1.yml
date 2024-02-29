@@ -6,7 +6,7 @@ topology:
       image: frrouting/frr:latest
       binds:
         - router1/daemons:/etc/frr/daemons
-        - router1/frr:/etc/frr/
+#        - router1/frr:/etc/frr/
     router2:
       kind: linux
       image: frrouting/frr:latest
